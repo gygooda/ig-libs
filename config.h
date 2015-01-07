@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-#define IG_CONFIG LibSys::Config::get_tm_config()
+#define CONFIG LibSys::Config::get_tm_config()
 
 namespace LibSys
 {

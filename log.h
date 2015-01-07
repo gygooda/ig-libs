@@ -1,3 +1,7 @@
+/**
+ * source from http://code.taobao.org/svn/tb-common-utils/trunk/tbsys/src/tblog.h
+ */
+
 #ifndef IG_LIBS_SYS_LOG_H
 #define IG_LIBS_SYS_LOG_H
 
@@ -16,36 +20,43 @@
 #include <pthread.h>
 #include <sys/time.h>
 
-#define IG_LOG_LEVEL_ERROR 0
-#define IG_LOG_LEVEL_USER_ERROR  1
-#define IG_LOG_LEVEL_WARN  2
-#define IG_LOG_LEVEL_INFO  3
-#define IG_LOG_LEVEL_TRACE 4
-#define IG_LOG_LEVEL_DEBUG 5
+#define LOG_LEVEL_ERROR 0
+#define LOG_LEVEL_USER_ERROR  1
+#define LOG_LEVEL_WARN  2
+#define LOG_LEVEL_INFO  3
+#define LOG_LEVEL_TRACE 4
+#define LOG_LEVEL_DEBUG 5
 
-#define IG_LOG_LEVEL(level) IG_LOG_LEVEL_##level, __FILE__, __LINE__, __FUNCTION__, pthread_self()
-#define IG_LOG_NUM_LEVEL(level) level, __FILE__, __LINE__, __FUNCTION__, pthread_self()
-#define IG_LOGGER LibSys::IgLogger::get_logger()
+#define LOG_LEVEL(level) LOG_LEVEL_##level, __FILE__, __LINE__, __FUNCTION__, pthread_self()
+#define LOG_NUM_LEVEL(level) level, __FILE__, __LINE__, __FUNCTION__, pthread_self()
 
-#define IGSYS_PRINT(level, ...) IG_LOGGER.log_message(IG_LOG_LEVEL(level), __VA_ARGS__)
-#define IG_LOG_BASE(level, ...) (IG_LOG_LEVEL_##level>IG_LOGGER._level) ? (void)0 : IGSYS_PRINT(level, __VA_ARGS__)
-#define IG_LOG(level, _fmt_, args...) ((IG_LOG_LEVEL_##level>IG_LOGGER._level) ? (void)0 : IG_LOG_BASE(level,_fmt_, ##args))
-#define IG_LOG_US(level, _fmt_, args...) \
-  ((IG_LOG_LEVEL_##level>IG_LOGGER._level) ? (void)0 : IG_LOG_BASE(level, "[%ld][%ld][%ld] " _fmt_, \
-                                                            pthread_self(), LibSys::IgLogger::get_cur_tv().tv_sec, \
-                                                            LibSys::IgLogger::get_cur_tv().tv_usec, ##args))
+#define LOG_PRINT(level, ...) LOGGER.log_message(LOG_LEVEL(level), __VA_ARGS__)
+#define LOG_BASE(level, ...) (LOG_LEVEL_##level>LOGGER._level) ? (void)0 : LOG_PRINT(level, __VA_ARGS__)
+#define LOG_US(level, _fmt_, args...) \
+  ((LOG_LEVEL_##level>LOGGER._level) ? (void)0 : LOG_BASE(level, "[%ld][%ld][%ld] " _fmt_, \
+                                                            pthread_self(), LibSys::Logger::get_cur_tv().tv_sec, \
+                                                            LibSys::Logger::get_cur_tv().tv_usec, ##args))
+
+#define LOGGER LibSys::Logger::get_logger()
+#define LOG(level, _fmt_, args...) ((LOG_LEVEL_##level>LOGGER._level) ? (void)0 : LOG_BASE(level,_fmt_, ##args))
+#define ERROR_LOG(_fmt_, args...) LOG(ERROR, _fmt_, ##args)
+#define USER_ERROR_LOG(_fmt_, args...) LOG(USER_ERROR, _fmt_, ##args)
+#define DEBUG_LOG(_fmt_, args...) LOG(DEBUG, _fmt_, ##args)
+#define WARN_LOG(_fmt_, args...) LOG(WARN, _fmt_, ##args)
+#define INFO_LOG(_fmt_, args...) LOG(INFO, _fmt_, ##args)
+#define TRACE_LOG(_fmt_, args...) LOG(TRACE, _fmt_, ##args)
 
 namespace LibSys 
 {
 using std::deque;
 using std::string;
 
-class IgLogger 
+class Logger 
 {
 public:
     static const mode_t LOG_FILE_MODE = 0644;
-    IgLogger();
-    ~IgLogger();
+    Logger();
+    ~Logger();
 
     void rotate_log(const char *filename, const char *fmt = NULL);
     void log_message(int level, const char *file, int line, const char *function, pthread_t tid, const char *fmt, ...) __attribute__ ((format (printf, 7, 8)));
@@ -79,7 +90,7 @@ public:
       return tv;
     };
 
-    static IgLogger& get_logger();
+    static Logger& get_logger();
 
 private:
     int _fd;
@@ -101,8 +112,8 @@ public:
     int _wf_level;
 
 private:
-    IgLogger(const IgLogger&);
-    IgLogger& operator = (const IgLogger&);
+    Logger(const Logger&);
+    Logger& operator = (const Logger&);
 };
 
 }

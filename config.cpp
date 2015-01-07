@@ -75,7 +75,7 @@ bool Config::parse(const char* file_name, bool overwrite)
                             }
                             else
                             {
-                                IG_LOG(ERROR, "duplicated keys %s in file %s.", key, m_file_name);
+                                ERROR_LOG("duplicated keys %s in file %s.", key, m_file_name);
                             }
                         }
 

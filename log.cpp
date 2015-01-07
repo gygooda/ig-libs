@@ -1,3 +1,7 @@
+/**
+ * source from http://code.taobao.org/svn/tb-common-utils/trunk/tbsys/src/tblog.cpp
+ */
+
 #include <string.h>
 #include <sys/uio.h>
 
@@ -5,9 +9,9 @@
 
 namespace LibSys
 {
-const char * const IgLogger::_errstr[] = {"ERROR","USER_ERR","WARN","INFO","TRACE","DEBUG"};
+const char * const Logger::_errstr[] = {"ERROR","USER_ERR","WARN","INFO","TRACE","DEBUG"};
 
-IgLogger::IgLogger() {
+Logger::Logger() {
     _fd = fileno(stderr);
     _wf_fd = fileno(stderr);
     _level = 9;
@@ -22,7 +26,7 @@ IgLogger::IgLogger() {
     _wf_flag = false;
 }
 
-IgLogger::~IgLogger() {
+Logger::~Logger() {
     if (_name != NULL) {
         free(_name);
         _name = NULL;
@@ -33,7 +37,7 @@ IgLogger::~IgLogger() {
     pthread_mutex_destroy(&_fileIndexMutex);
 }
 
-void IgLogger::set_log_level(const char *level, const char *wf_level)
+void Logger::set_log_level(const char *level, const char *wf_level)
 {
     if (level == NULL) return;
     int l = sizeof(_errstr)/sizeof(char*);
@@ -56,7 +60,7 @@ void IgLogger::set_log_level(const char *level, const char *wf_level)
     }
 }
 
-void IgLogger::set_file_name(const char *filename, bool flag, bool open_wf)
+void Logger::set_file_name(const char *filename, bool flag, bool open_wf)
 {
     bool need_closing = false;
     if (_name) {
@@ -100,7 +104,7 @@ void IgLogger::set_file_name(const char *filename, bool flag, bool open_wf)
 
 static  char NEWLINE[1] = {'\n'};
 
-void IgLogger::log_message(int level,const char *file, int line, const char *function, pthread_t tid, 
+void Logger::log_message(int level,const char *file, int line, const char *function, pthread_t tid, 
         const char *fmt, ...) 
 {
     if (level>_level) return;
@@ -130,7 +134,7 @@ void IgLogger::log_message(int level,const char *file, int line, const char *fun
     data1[data_size] = '\0';
 
     int head_size;
-    if (level < IG_LOG_LEVEL_INFO) {
+    if (level < LOG_LEVEL_INFO) {
         head_size = snprintf(head,128,"[%04d-%02d-%02d %02d:%02d:%02d.%06ld] %-5s %s (%s:%d) [%ld] ",
                 tm.tm_year+1900, tm.tm_mon+1, tm.tm_mday,
                 tm.tm_hour, tm.tm_min, tm.tm_sec, tv.tv_usec,
@@ -168,7 +172,7 @@ void IgLogger::log_message(int level,const char *file, int line, const char *fun
     }
 }
 
-void IgLogger::rotate_log(const char *filename, const char *fmt) 
+void Logger::rotate_log(const char *filename, const char *fmt) 
 {
     if (filename == NULL && _name != NULL) 
     {
@@ -257,7 +261,7 @@ void IgLogger::rotate_log(const char *filename, const char *fmt)
     }
 }
 
-void IgLogger::check_file()
+void Logger::check_file()
 {
     struct stat stFile;
     struct stat stFd;
@@ -285,14 +289,14 @@ void IgLogger::check_file()
     }
 }
 
-IgLogger::IgLogger& IgLogger::get_logger()
+Logger::Logger& Logger::get_logger()
 {
-    static IgLogger logger;
+    static Logger logger;
 
     return logger;
 }
 
-void IgLogger::set_max_file_size( int64_t maxFileSize)
+void Logger::set_max_file_size( int64_t maxFileSize)
 {
     // 1GB
     if ( maxFileSize < 0x0 || maxFileSize > 0x40000000){
@@ -302,7 +306,7 @@ void IgLogger::set_max_file_size( int64_t maxFileSize)
     _maxFileSize = maxFileSize;
 }
 
-void IgLogger::set_max_file_index( int maxFileIndex )
+void Logger::set_max_file_index( int maxFileIndex )
 {
     if ( maxFileIndex < 0x00 ) {
         maxFileIndex = 0x0F;
