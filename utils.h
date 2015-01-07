@@ -1,7 +1,7 @@
 #ifndef IG_LIBS_SYS_UTILS_H
 #define IG_LIBS_SYS_UTILS_H
 
-namespace IgSys
+namespace LibSys
 {
 
 #define barrier() __asm__ __volatile__("": : :"memory")
@@ -52,7 +52,7 @@ inline unsigned long roundup_pow_of_two(unsigned long n)
 }
 
 
-} // namespace IgSys
+} // namespace LibSys
 
 #endif
 

@@ -1,7 +1,7 @@
 #ifndef IG_LIBS_SYS_DAEMON_H
 #define IG_LIBS_SYS_DAEMON_H
 
-namespace IgSys
+namespace LibSys
 {
     int daemonize(int nochdir, int noclose);
 

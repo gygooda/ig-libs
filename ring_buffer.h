@@ -3,7 +3,7 @@
 
 #include <sys/mman.h>
 
-namespace IgSys
+namespace LibSys
 {
 
 // 无锁的循环队列，只支持一个写线程和一个读线程的情况。
@@ -66,5 +66,5 @@ private:
     bool m_shared;
 };
 
-} // namespace IgSys
+} // namespace LibSys
 #endif

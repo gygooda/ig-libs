@@ -1,5 +1,8 @@
 #include "timer.h"
 
+namespace LibSys
+{
+
 int TimerManager::add_timer(unsigned itv, ITimerCallback* cb, void* cb_arg)
 {
     if(m_timer_list.size() >= MAX_TIME_ENVET_COUNT)
@@ -49,3 +52,5 @@ int TimerManager::process_timer(time_t now)
 
     return 0;
 }
+
+} // namespace LibSys

@@ -1,6 +1,6 @@
 #include "thread.h"
 
-namespace IgSys
+namespace LibSys
 {
 
 void* Thread::thread_func(void * arg)
@@ -26,4 +26,4 @@ int Thread::run(void)
     return 0;
 }
 
-} // namespace IgSys
+} // namespace LibSys

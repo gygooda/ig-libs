@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-namespace IgSys
+namespace LibSys
 {
 
 int daemonize(int nochdir, int noclose)
@@ -98,4 +98,4 @@ int daemon_lock(const char* fpath)
     return fd;
 }
 
-} // namespace IgSys
+} // namespace LibSys

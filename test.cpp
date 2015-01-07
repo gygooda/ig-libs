@@ -7,7 +7,7 @@
 #include "timer.h"
 #include "shared_queue.h"
 
-using namespace IgSys;
+using namespace LibSys;
 
 class Tthread : public Thread
 {
@@ -62,12 +62,11 @@ int main()
 
    IG_CONFIG.load("test.ini", false);
 
-   float f = IG_CONFIG.get("float-key", 0.0f);
-   int i = IG_CONFIG.get("int-key", 0);
-   std::string def = "def";
-   std::string s = IG_CONFIG.get("str-key", def);
+   float f = IG_CONFIG.get("f", 0.0f);
+   int i = IG_CONFIG.get("i", 0);
+   const char *s = IG_CONFIG.get("s", "def");
 
-   IG_LOG(DEBUG, "f: %f, i: %d, s: %s", f, i, s.c_str());
+   IG_LOG(DEBUG, "f: %f, i: %d, s: %s", f, i, s);
    //IG_LOGGER.rotate_log(NULL);
    //
    //unsigned int number = 127UL;

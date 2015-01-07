@@ -6,7 +6,7 @@
 
 #include "ring_buffer.h"
 
-namespace IgSys
+namespace LibSys
 {
 
 class SharedQueue
@@ -73,6 +73,6 @@ private:
     RingBuffer m_ring_buffer;
 };
 
-} // namespace IgSys
+} // namespace LibSys
 
 #endif

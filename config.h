@@ -5,9 +5,9 @@
 #include <string>
 #include <sstream>
 
-#define IG_CONFIG IgSys::Config::get_tm_config()
+#define IG_CONFIG LibSys::Config::get_tm_config()
 
-namespace IgSys
+namespace LibSys
 {
 
 /**
@@ -39,10 +39,36 @@ public:
 
     // 获取配置项的值
     // 失败时返回default_value
-    template<typename T>
-    const T get(const char* key, const T& default_value) const;
-    template<typename T>
-    const T get(const std::string& key, const T& default_value) const ;
+    int get(const std::string& key, int default_value) const
+    {
+        ConfigHash::const_iterator it = m_config_hash.find(key);
+        if(it != m_config_hash.end())
+        {
+            return atoi(it->second.c_str());
+        }
+
+        return default_value;
+    }
+    float get(const std::string& key, float default_value) const
+    {
+        ConfigHash::const_iterator it = m_config_hash.find(key);
+        if(it != m_config_hash.end())
+        {
+            return atof(it->second.c_str());
+        }
+
+        return default_value;
+    }
+    const char* get(const std::string& key, const char* default_value) const
+    {
+        ConfigHash::const_iterator it = m_config_hash.find(key);
+        if(it != m_config_hash.end())
+        {
+            return it->second.c_str();
+        }
+
+        return default_value;
+    }
 
     static Config& get_tm_config()
     {
@@ -58,38 +84,13 @@ private:
     Config& operator = (const Config&);
 
 private:
-    typedef std::unordered_map< std::string, std::string > ConfigHash;
+    typedef std::unordered_map<std::string, std::string> ConfigHash;
 
     ConfigHash m_config_hash;
 
     const char* m_file_name;
 };
 
-template<typename T>
-const T Config::get(const std::string& key, const T& default_value) const
-{
-    std::stringstream ss;
-
-    ConfigHash::const_iterator it = m_config_hash.find(key);
-    if(it != m_config_hash.end())
-    {
-        T val;
-        ss << it->second;
-        ss >> val;
-
-        return val;
-    }
-
-    return default_value;
-}
-
-template<typename T>
-inline const T Config::get(const char* key, const T& default_value) const
-{
-    const std::string str = key;
-    return get(str, default_value);
-}
-
-} // namespace IgSys
+} // namespace LibSys
 
 #endif

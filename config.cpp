@@ -8,7 +8,7 @@
 #include "config.h"
 #include "log.h"
 
-namespace IgSys
+namespace LibSys
 {
 
 bool Config::parse(const char* file_name, bool overwrite)
@@ -126,4 +126,4 @@ bool Config::reload(const char * file_name)
     return parse(m_file_name, true);
 }
 
-} // namespace IgSys
+} // namespace LibSys

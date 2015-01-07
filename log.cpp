@@ -3,7 +3,7 @@
 
 #include "log.h"
 
-namespace IgSys
+namespace LibSys
 {
 const char * const IgLogger::_errstr[] = {"ERROR","USER_ERR","WARN","INFO","TRACE","DEBUG"};
 

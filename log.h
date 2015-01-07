@@ -25,17 +25,17 @@
 
 #define IG_LOG_LEVEL(level) IG_LOG_LEVEL_##level, __FILE__, __LINE__, __FUNCTION__, pthread_self()
 #define IG_LOG_NUM_LEVEL(level) level, __FILE__, __LINE__, __FUNCTION__, pthread_self()
-#define IG_LOGGER IgSys::IgLogger::get_logger()
+#define IG_LOGGER LibSys::IgLogger::get_logger()
 
 #define IGSYS_PRINT(level, ...) IG_LOGGER.log_message(IG_LOG_LEVEL(level), __VA_ARGS__)
 #define IG_LOG_BASE(level, ...) (IG_LOG_LEVEL_##level>IG_LOGGER._level) ? (void)0 : IGSYS_PRINT(level, __VA_ARGS__)
 #define IG_LOG(level, _fmt_, args...) ((IG_LOG_LEVEL_##level>IG_LOGGER._level) ? (void)0 : IG_LOG_BASE(level,_fmt_, ##args))
 #define IG_LOG_US(level, _fmt_, args...) \
   ((IG_LOG_LEVEL_##level>IG_LOGGER._level) ? (void)0 : IG_LOG_BASE(level, "[%ld][%ld][%ld] " _fmt_, \
-                                                            pthread_self(), IgSys::IgLogger::get_cur_tv().tv_sec, \
-                                                            IgSys::IgLogger::get_cur_tv().tv_usec, ##args))
+                                                            pthread_self(), LibSys::IgLogger::get_cur_tv().tv_sec, \
+                                                            LibSys::IgLogger::get_cur_tv().tv_usec, ##args))
 
-namespace IgSys 
+namespace LibSys 
 {
 using std::deque;
 using std::string;

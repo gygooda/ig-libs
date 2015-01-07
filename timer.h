@@ -6,6 +6,9 @@
 
 using std::list;
 
+namespace LibSys
+{
+
 struct ITimerCallback
 {
     virtual ~ITimerCallback()
@@ -89,6 +92,8 @@ private:
 
     static const unsigned MAX_TIME_ENVET_COUNT = 1000;
 };
+
+} // namespace LibSys
 
 #endif
 

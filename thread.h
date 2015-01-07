@@ -3,7 +3,7 @@
 
 #include <pthread.h>
 
-namespace IgSys
+namespace LibSys
 {
 
 /**
@@ -64,6 +64,6 @@ private:
     bool m_joinable;
 };
 
-} // namespace IgSys
+} // namespace LibSys
 
 #endif

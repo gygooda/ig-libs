@@ -3,7 +3,7 @@ AR       = ar rcs
 NOATIME  = 
 CFLAGS   = -DCONFIG_SMP -DNDEBUG -std=c++0x -Wall -Wno-non-virtual-dtor -ggdb
 LIBS     = -ldl -lrt -pthread
-TARGET   = libiglib-sys.a 
+TARGET   = libig-libsys.a 
 INCLUDES = -I.
 SOURCES  = $(wildcard *.cpp)
 OBJS     = $(patsubst %.cpp,%.o,$(SOURCES)) 

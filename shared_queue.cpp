@@ -2,7 +2,7 @@
 
 #include "shared_queue.h"
 
-namespace IgSys
+namespace LibSys
 {
 
 int SharedQueue::init(size_t size, bool shared)
@@ -70,4 +70,4 @@ ssize_t SharedQueue::write(const void *buf, size_t size, bool write_notify)
     return ret;
 }
 
-} // namespace IgSys
+} // namespace LibSys

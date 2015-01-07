@@ -5,7 +5,7 @@
 #include "utils.h"
 #include "ring_buffer.h"
 
-namespace IgSys
+namespace LibSys
 {
 
 /**
@@ -116,4 +116,4 @@ unsigned long RingBuffer::ring_buffer_read(unsigned char* buffer, unsigned long 
     return len;
 }
 
-} // namespace IgSys
+} // namespace LibSys
