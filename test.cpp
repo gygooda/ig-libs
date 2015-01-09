@@ -55,16 +55,17 @@ class Ttimer : public ITimerCallback
         }
 };
 
+LibSys::Config g_config;
 int main()
 {
    LOGGER.set_file_name("test.log");
    LOGGER.set_log_level("DEBUG");
 
-   CONFIG.load("test.ini", false);
+   g_config.load("test.ini", false);
 
-   float f = CONFIG.get("f", 0.0f);
-   int i = CONFIG.get("i", 0);
-   const char *s = CONFIG.get("s", "def");
+   float f = g_config.get("f", 0.0f);
+   int i = g_config.get("i", 0);
+   const char *s = g_config.get("s", "def");
 
    DEBUG_LOG("f: %f, i: %d, s: %s", f, i, s);
    //LOGGER.rotate_log(NULL);

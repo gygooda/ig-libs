@@ -18,7 +18,7 @@ Logger::Logger() {
     _wf_level = 2; /* WARN */
     _name = NULL;
     _check = 0;
-    _maxFileSize = 0;
+    _maxFileSize = 67108864; // 64MB by default
     _maxFileIndex = 0;
     pthread_mutex_init(&_fileSizeMutex, NULL );
     pthread_mutex_init(&_fileIndexMutex, NULL );
@@ -158,7 +158,7 @@ void Logger::log_message(int level,const char *file, int line, const char *funct
         if (_wf_flag && level <= _wf_level)
             ::writev(_wf_fd, vec, 3);
     }
-    if ( _maxFileSize ){
+    if (_maxFileSize){
         pthread_mutex_lock(&_fileSizeMutex);
         off_t offset = ::lseek(_fd, 0, SEEK_END);
         if ( offset < 0 ){
@@ -289,14 +289,7 @@ void Logger::check_file()
     }
 }
 
-Logger::Logger& Logger::get_logger()
-{
-    static Logger logger;
-
-    return logger;
-}
-
-void Logger::set_max_file_size( int64_t maxFileSize)
+void Logger::set_max_file_size(int64_t maxFileSize)
 {
     // 1GB
     if ( maxFileSize < 0x0 || maxFileSize > 0x40000000){

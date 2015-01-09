@@ -5,8 +5,6 @@
 #include <string>
 #include <sstream>
 
-#define CONFIG LibSys::Config::get_tm_config()
-
 namespace LibSys
 {
 
@@ -68,12 +66,6 @@ public:
         }
 
         return default_value;
-    }
-
-    static Config& get_tm_config()
-    {
-        static Config g_tm_config;
-        return g_tm_config;
     }
 
 private:
