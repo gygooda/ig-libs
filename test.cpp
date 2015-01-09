@@ -1,7 +1,7 @@
 #include <unistd.h>
 
 #include "log.h"
-#include "config.h"
+#include "conf.h"
 #include "utils.h"
 #include "thread.h"
 #include "timer.h"

@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "config.h"
+#include "conf.h"
 #include "log.h"
 
 namespace LibSys
