@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
@@ -75,7 +76,7 @@ bool Config::parse(const char* file_name, bool overwrite)
                             }
                             else
                             {
-                                ERROR_LOG("duplicated keys %s in file %s.", key, m_file_name);
+                                fprintf(stderr, "duplicated keys %s in file %s.", key, m_file_name);
                             }
                         }
 
