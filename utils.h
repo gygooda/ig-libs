@@ -4,6 +4,14 @@
 namespace LibSys
 {
 
+// disallow copy and assign constructors
+#define DISALLOW_COPY_AND_ASSIGN(type_name) \
+    type_name(const type_name&); \
+    type_name& operator = (const type_name&)
+
+#define likely(x) __builtin_expect(!!(x), 1)
+#define unlikely(x) __builtin_expect(!!(x), 0)
+
 #define barrier() __asm__ __volatile__("": : :"memory")
 
 #ifdef CONFIG_SMP
